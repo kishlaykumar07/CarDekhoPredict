@@ -12,11 +12,21 @@ builder.Services.AddScoped<RecommendationService>();
 
 builder.Services.AddCors(options =>
 {
+    var corsOrigins = builder.Configuration.GetValue<string>("CorsOrigins") ?? "http://localhost:4200";
     options.AddPolicy("FrontendPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        if (corsOrigins == "*")
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+        else
+        {
+            policy.WithOrigins(corsOrigins.Split(","))
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
     });
 });
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { API_CONFIG } from './api.config';
 
 interface RecommendationRequest {
   budget: number;
@@ -163,7 +164,7 @@ export class WizardComponent {
 
     try {
       const recommendations = await this.http
-        .post<RecommendedCar[]>('http://localhost:5000/api/recommendations', requestBody)
+        .post<RecommendedCar[]>(API_CONFIG.endpoints.recommendations, requestBody)
         .toPromise();
 
       await this.router.navigate(['/results'], {
