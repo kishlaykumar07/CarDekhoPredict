@@ -1,7 +1,8 @@
-// API Configuration
-const API_BASE_URL = window.location.origin === 'http://localhost:4200' 
+const RENDER_BACKEND_URL = 'https://YOUR_RENDER_URL.onrender.com';
+
+const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:5000'
-  : window.location.origin.replace(':4200', '').replace('frontend', 'backend');
+  : RENDER_BACKEND_URL;
 
 export const API_CONFIG = {
   baseUrl: API_BASE_URL,

@@ -50,7 +50,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("FrontendPolicy");
-app.UseHttpsRedirection();
 
 app.MapPost("/api/recommendations", async (RecommendationRequest request, RecommendationService recommendationService) =>
     {
