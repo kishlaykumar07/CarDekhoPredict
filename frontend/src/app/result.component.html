@@ -1,0 +1,58 @@
+<section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+  <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900">Hey, Your Top Matches</h1>
+      <p class="mt-2 text-sm text-slate-600">Based on your preferences, these are the best fits for you.</p>
+    </div>
+
+    <button
+      type="button"
+      class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+      (click)="startOver()"
+    >
+      Start Over
+    </button>
+  </div>
+
+  @if (results().length === 0) {
+    <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+      <p class="text-slate-700">No recommendations were found in router state.</p>
+      <button
+        type="button"
+        class="mt-4 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+        (click)="startOver()"
+      >
+        Go Back to Wizard
+      </button>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      @for (car of results(); track car.id) {
+        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-start justify-between gap-3">
+            <h2 class="text-lg font-bold text-slate-900">
+              {{ car.make }} {{ car.model }} {{ car.varient }}
+            </h2>
+            <span
+              class="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
+              [class]="getBadgeClass(car.matchScore)"
+            >
+              Match {{ car.matchScore }}
+            </span>
+          </div>
+
+          <p class="mt-2 text-xl font-semibold text-slate-900">{{ formatPrice(car.price) }}</p>
+
+          <div class="mt-4 grid grid-cols-2 gap-2 text-sm text-slate-700">
+            <div class="rounded-lg bg-slate-50 px-3 py-2">💺 {{ car.seats }}</div>
+            <div class="rounded-lg bg-slate-50 px-3 py-2">{{ car.fuelType }}</div>
+            <div class="rounded-lg bg-slate-50 px-3 py-2">{{ safetyStars(car.safetyRatings) }}</div>
+            <div class="rounded-lg bg-slate-50 px-3 py-2">{{ car.mileageMpg }} MPG</div>
+          </div>
+
+          <p class="mt-4 text-sm italic text-slate-600">{{ car.reviewSummary }}</p>
+        </article>
+      }
+    </div>
+  }
+</section>

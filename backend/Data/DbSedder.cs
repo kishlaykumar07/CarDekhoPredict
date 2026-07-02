@@ -1,0 +1,83 @@
+using CarReasearch.API.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace CarReasearch.API.Data;
+
+public static class DbSedder
+{
+    public static async Task SeedAsync(AppDbContext dbContext)
+    {
+        if (await dbContext.Cars.AnyAsync())
+        {
+            return;
+        }
+
+        var cars = new List<Car>
+        {
+            // Budget cars
+            new() { Make = "Maruti Suzuki", Model = "Alto K10", Varient = "VXi Plus", Price = 550000m, FuelType = "Petrol", Seats = 5, MileageMpg = 55, SafetyRatings = 2, HorsePower = 67, UseCase = "city", ReviewSummary = "Compact and extremely easy to drive in crowded streets with low running cost." },
+            new() { Make = "Maruti Suzuki", Model = "S-Presso", Varient = "VXi", Price = 580000m, FuelType = "Petrol", Seats = 5, MileageMpg = 52, SafetyRatings = 2, HorsePower = 67, UseCase = "city", ReviewSummary = "Tall-boy stance helps visibility and it is practical for short daily commutes." },
+            new() { Make = "Renault", Model = "Kwid", Varient = "Climber", Price = 640000m, FuelType = "Petrol", Seats = 5, MileageMpg = 50, SafetyRatings = 2, HorsePower = 68, UseCase = "city", ReviewSummary = "Feature-rich hatchback with good ground clearance for rough urban roads." },
+            new() { Make = "Maruti Suzuki", Model = "Celerio", Varient = "ZXi AMT", Price = 740000m, FuelType = "Petrol", Seats = 5, MileageMpg = 61, SafetyRatings = 2, HorsePower = 67, UseCase = "city", ReviewSummary = "Light controls and efficient engine make it ideal for stop-go traffic." },
+            new() { Make = "Maruti Suzuki", Model = "WagonR", Varient = "ZXi 1.2", Price = 760000m, FuelType = "Petrol", Seats = 5, MileageMpg = 52, SafetyRatings = 2, HorsePower = 89, UseCase = "family", ReviewSummary = "Spacious cabin and upright seating make family drives comfortable." },
+            new() { Make = "Tata", Model = "Tiago", Varient = "XZ Plus", Price = 790000m, FuelType = "Petrol", Seats = 5, MileageMpg = 47, SafetyRatings = 4, HorsePower = 86, UseCase = "city", ReviewSummary = "Solid build quality and balanced ride for first-time buyers." },
+            new() { Make = "Hyundai", Model = "Grand i10 Nios", Varient = "Sportz", Price = 820000m, FuelType = "Petrol", Seats = 5, MileageMpg = 49, SafetyRatings = 2, HorsePower = 83, UseCase = "city", ReviewSummary = "Refined engine and premium interior feel in an affordable package." },
+            new() { Make = "Maruti Suzuki", Model = "Swift", Varient = "VXi", Price = 845000m, FuelType = "Petrol", Seats = 5, MileageMpg = 54, SafetyRatings = 2, HorsePower = 89, UseCase = "city", ReviewSummary = "Peppy performance and nimble handling for young urban users." },
+            new() { Make = "Hyundai", Model = "Exter", Varient = "SX", Price = 880000m, FuelType = "Petrol", Seats = 5, MileageMpg = 46, SafetyRatings = 3, HorsePower = 83, UseCase = "family", ReviewSummary = "Micro-SUV practicality with a comfortable and feature-loaded cabin." },
+            new() { Make = "Tata", Model = "Punch", Varient = "Adventure", Price = 900000m, FuelType = "Petrol", Seats = 5, MileageMpg = 44, SafetyRatings = 5, HorsePower = 88, UseCase = "city", ReviewSummary = "Strong safety and compact footprint make it a smart city SUV." },
+            new() { Make = "Citroen", Model = "C3", Varient = "Feel", Price = 910000m, FuelType = "Petrol", Seats = 5, MileageMpg = 45, SafetyRatings = 3, HorsePower = 82, UseCase = "city", ReviewSummary = "Comfort-focused suspension smooths broken roads very well." },
+            new() { Make = "Maruti Suzuki", Model = "Baleno", Varient = "Delta", Price = 920000m, FuelType = "Petrol", Seats = 5, MileageMpg = 53, SafetyRatings = 3, HorsePower = 89, UseCase = "family", ReviewSummary = "Large boot and practical rear seat for everyday family errands." },
+            new() { Make = "Toyota", Model = "Glanza", Varient = "S", Price = 930000m, FuelType = "Petrol", Seats = 5, MileageMpg = 52, SafetyRatings = 3, HorsePower = 89, UseCase = "family", ReviewSummary = "Reliable hatchback with efficient powertrain and easy ownership." },
+            new() { Make = "Nissan", Model = "Magnite", Varient = "XV", Price = 950000m, FuelType = "Petrol", Seats = 5, MileageMpg = 45, SafetyRatings = 4, HorsePower = 99, UseCase = "city", ReviewSummary = "Value SUV with punchy turbo option and good road presence." },
+            new() { Make = "Renault", Model = "Kiger", Varient = "RXZ", Price = 960000m, FuelType = "Petrol", Seats = 5, MileageMpg = 44, SafetyRatings = 4, HorsePower = 99, UseCase = "city", ReviewSummary = "Compact SUV with practical packaging and decent comfort." },
+            new() { Make = "Tata", Model = "Tigor EV", Varient = "XZ Plus", Price = 1300000m, FuelType = "EV", Seats = 5, MileageMpg = 100, SafetyRatings = 4, HorsePower = 73, UseCase = "city", ReviewSummary = "Affordable EV sedan with usable range for city commuting." },
+
+            // Mid-range cars
+            new() { Make = "Maruti Suzuki", Model = "Brezza", Varient = "ZXi", Price = 1250000m, FuelType = "Petrol", Seats = 5, MileageMpg = 42, SafetyRatings = 4, HorsePower = 103, UseCase = "family", ReviewSummary = "Well-rounded compact SUV with reliable service network." },
+            new() { Make = "Hyundai", Model = "Venue", Varient = "SX Turbo", Price = 1280000m, FuelType = "Petrol", Seats = 5, MileageMpg = 40, SafetyRatings = 4, HorsePower = 120, UseCase = "city", ReviewSummary = "Feature-rich compact SUV with refined turbo performance." },
+            new() { Make = "Kia", Model = "Sonet", Varient = "HTX", Price = 1320000m, FuelType = "Petrol", Seats = 5, MileageMpg = 39, SafetyRatings = 3, HorsePower = 120, UseCase = "city", ReviewSummary = "Modern cabin and connected tech with energetic engine options." },
+            new() { Make = "Mahindra", Model = "XUV 3XO", Varient = "AX5", Price = 1350000m, FuelType = "Petrol", Seats = 5, MileageMpg = 38, SafetyRatings = 5, HorsePower = 130, UseCase = "family", ReviewSummary = "Strong safety package and roomy interior for compact SUV class." },
+            new() { Make = "Honda", Model = "Amaze", Varient = "VX CVT", Price = 1100000m, FuelType = "Petrol", Seats = 5, MileageMpg = 45, SafetyRatings = 4, HorsePower = 90, UseCase = "family", ReviewSummary = "Comfortable sedan with smooth CVT and good rear seat space." },
+            new() { Make = "Hyundai", Model = "Aura", Varient = "SX", Price = 1050000m, FuelType = "Petrol", Seats = 5, MileageMpg = 47, SafetyRatings = 3, HorsePower = 83, UseCase = "family", ReviewSummary = "Compact sedan offering a practical blend of efficiency and comfort." },
+            new() { Make = "Tata", Model = "Nexon", Varient = "Creative", Price = 1450000m, FuelType = "Petrol", Seats = 5, MileageMpg = 37, SafetyRatings = 5, HorsePower = 118, UseCase = "family", ReviewSummary = "Safety-focused SUV with mature ride and modern infotainment." },
+            new() { Make = "Mahindra", Model = "Bolero Neo", Varient = "N10", Price = 1200000m, FuelType = "Diesel", Seats = 7, MileageMpg = 36, SafetyRatings = 3, HorsePower = 100, UseCase = "adventure", ReviewSummary = "Rugged ladder-frame utility vehicle suited for mixed terrain use." },
+            new() { Make = "Maruti Suzuki", Model = "Ertiga", Varient = "ZXi", Price = 1380000m, FuelType = "Petrol", Seats = 7, MileageMpg = 41, SafetyRatings = 3, HorsePower = 103, UseCase = "family", ReviewSummary = "Practical MPV with flexible seating and easy long-distance manners." },
+            new() { Make = "Toyota", Model = "Rumion", Varient = "S", Price = 1420000m, FuelType = "Petrol", Seats = 7, MileageMpg = 40, SafetyRatings = 3, HorsePower = 103, UseCase = "family", ReviewSummary = "Dependable MPV option with comfortable second and third rows." },
+            new() { Make = "Kia", Model = "Carens", Varient = "Prestige", Price = 1750000m, FuelType = "Diesel", Seats = 7, MileageMpg = 44, SafetyRatings = 3, HorsePower = 115, UseCase = "family", ReviewSummary = "Spacious people mover with practical cabin and highway stability." },
+            new() { Make = "Hyundai", Model = "Creta", Varient = "S", Price = 1700000m, FuelType = "Petrol", Seats = 5, MileageMpg = 38, SafetyRatings = 3, HorsePower = 115, UseCase = "family", ReviewSummary = "Refined mid-size SUV with premium feel and broad feature list." },
+            new() { Make = "Kia", Model = "Seltos", Varient = "HTK Plus", Price = 1780000m, FuelType = "Petrol", Seats = 5, MileageMpg = 37, SafetyRatings = 3, HorsePower = 115, UseCase = "highway", ReviewSummary = "Highway-friendly SUV with good power delivery and stable handling." },
+            new() { Make = "Skoda", Model = "Kushaq", Varient = "Ambition 1.0 TSI", Price = 1760000m, FuelType = "Petrol", Seats = 5, MileageMpg = 36, SafetyRatings = 5, HorsePower = 115, UseCase = "highway", ReviewSummary = "European tuning offers confident dynamics and strong safety." },
+            new() { Make = "Volkswagen", Model = "Taigun", Varient = "Topline 1.0 TSI", Price = 1800000m, FuelType = "Petrol", Seats = 5, MileageMpg = 36, SafetyRatings = 5, HorsePower = 115, UseCase = "highway", ReviewSummary = "Solid build and stable high-speed behavior inspire confidence." },
+            new() { Make = "Honda", Model = "City", Varient = "VX", Price = 1650000m, FuelType = "Petrol", Seats = 5, MileageMpg = 40, SafetyRatings = 5, HorsePower = 121, UseCase = "highway", ReviewSummary = "Smooth sedan with excellent rear-seat comfort for long drives." },
+            new() { Make = "Hyundai", Model = "Verna", Varient = "SX", Price = 1720000m, FuelType = "Petrol", Seats = 5, MileageMpg = 39, SafetyRatings = 5, HorsePower = 115, UseCase = "highway", ReviewSummary = "Modern sedan with premium tech and balanced ride quality." },
+            new() { Make = "Maruti Suzuki", Model = "Grand Vitara", Varient = "Delta", Price = 1680000m, FuelType = "Hybrid", Seats = 5, MileageMpg = 56, SafetyRatings = 4, HorsePower = 103, UseCase = "family", ReviewSummary = "Strong hybrid efficiency with SUV practicality for daily usage." },
+            new() { Make = "Toyota", Model = "Urban Cruiser Hyryder", Varient = "S", Price = 1750000m, FuelType = "Hybrid", Seats = 5, MileageMpg = 58, SafetyRatings = 4, HorsePower = 103, UseCase = "family", ReviewSummary = "Fuel-efficient hybrid SUV with relaxed city and highway manners." },
+            new() { Make = "MG", Model = "Astor", Varient = "Sharp", Price = 1790000m, FuelType = "Petrol", Seats = 5, MileageMpg = 35, SafetyRatings = 5, HorsePower = 110, UseCase = "highway", ReviewSummary = "Comfortable urban SUV with rich interior and ADAS features." },
+
+            // Premium cars
+            new() { Make = "Toyota", Model = "Innova Hycross", Varient = "GX", Price = 2800000m, FuelType = "Hybrid", Seats = 7, MileageMpg = 47, SafetyRatings = 5, HorsePower = 184, UseCase = "family", ReviewSummary = "Large premium MPV with excellent comfort and efficient hybrid system." },
+            new() { Make = "Toyota", Model = "Fortuner", Varient = "4x2 AT", Price = 4200000m, FuelType = "Diesel", Seats = 7, MileageMpg = 31, SafetyRatings = 5, HorsePower = 201, UseCase = "adventure", ReviewSummary = "Powerful body-on-frame SUV known for reliability and road presence." },
+            new() { Make = "MG", Model = "Gloster", Varient = "Sharp 4x2", Price = 4100000m, FuelType = "Diesel", Seats = 7, MileageMpg = 29, SafetyRatings = 5, HorsePower = 161, UseCase = "adventure", ReviewSummary = "Feature-loaded full-size SUV with commanding highway comfort." },
+            new() { Make = "Jeep", Model = "Compass", Varient = "Limited", Price = 3300000m, FuelType = "Diesel", Seats = 5, MileageMpg = 36, SafetyRatings = 5, HorsePower = 170, UseCase = "adventure", ReviewSummary = "Solidly built SUV with mature suspension and strong diesel torque." },
+            new() { Make = "Hyundai", Model = "Tucson", Varient = "Platinum AT", Price = 3500000m, FuelType = "Petrol", Seats = 5, MileageMpg = 33, SafetyRatings = 5, HorsePower = 156, UseCase = "highway", ReviewSummary = "Refined premium SUV with comfortable ride and feature-rich cabin." },
+            new() { Make = "Volkswagen", Model = "Tiguan", Varient = "Elegance", Price = 3900000m, FuelType = "Petrol", Seats = 5, MileageMpg = 31, SafetyRatings = 5, HorsePower = 190, UseCase = "highway", ReviewSummary = "Strong turbo performance and excellent stability at speed." },
+            new() { Make = "Skoda", Model = "Kodiaq", Varient = "Sportline", Price = 4200000m, FuelType = "Petrol", Seats = 7, MileageMpg = 30, SafetyRatings = 5, HorsePower = 190, UseCase = "family", ReviewSummary = "Premium 7-seater with plush interior and strong highway manners." },
+            new() { Make = "BYD", Model = "Atto 3", Varient = "Special Edition", Price = 3400000m, FuelType = "EV", Seats = 5, MileageMpg = 120, SafetyRatings = 5, HorsePower = 201, UseCase = "city", ReviewSummary = "Modern EV crossover with strong range and quick acceleration." },
+            new() { Make = "Hyundai", Model = "IONIQ 5", Varient = "Long Range RWD", Price = 4600000m, FuelType = "EV", Seats = 5, MileageMpg = 122, SafetyRatings = 5, HorsePower = 217, UseCase = "highway", ReviewSummary = "Premium EV with fast charging capability and spacious cabin." },
+            new() { Make = "Kia", Model = "EV6", Varient = "GT Line AWD", Price = 5000000m, FuelType = "EV", Seats = 5, MileageMpg = 115, SafetyRatings = 5, HorsePower = 320, UseCase = "highway", ReviewSummary = "High-performance EV crossover with strong dynamics and technology." },
+            new() { Make = "Volvo", Model = "XC40 Recharge", Varient = "Plus", Price = 4900000m, FuelType = "EV", Seats = 5, MileageMpg = 108, SafetyRatings = 5, HorsePower = 408, UseCase = "highway", ReviewSummary = "Quick and safe premium EV suited for long intercity usage." },
+            new() { Make = "BMW", Model = "X1", Varient = "sDrive18i M Sport", Price = 4950000m, FuelType = "Petrol", Seats = 5, MileageMpg = 30, SafetyRatings = 5, HorsePower = 136, UseCase = "highway", ReviewSummary = "Entry luxury SUV with sporty handling and premium interior quality." },
+            new() { Make = "Mercedes-Benz", Model = "A-Class Limousine", Varient = "A200", Price = 4700000m, FuelType = "Petrol", Seats = 5, MileageMpg = 32, SafetyRatings = 5, HorsePower = 163, UseCase = "highway", ReviewSummary = "Luxury sedan with refined drivetrain and advanced safety features." },
+            new() { Make = "Audi", Model = "A4", Varient = "Premium Plus", Price = 4900000m, FuelType = "Petrol", Seats = 5, MileageMpg = 31, SafetyRatings = 5, HorsePower = 190, UseCase = "highway", ReviewSummary = "Comfortable executive sedan with composed ride and strong engine." },
+            new() { Make = "Toyota", Model = "Camry", Varient = "Hybrid", Price = 4800000m, FuelType = "Hybrid", Seats = 5, MileageMpg = 52, SafetyRatings = 5, HorsePower = 218, UseCase = "highway", ReviewSummary = "Premium hybrid sedan with silent operation and excellent efficiency." },
+            new() { Make = "Lexus", Model = "ES 300h", Varient = "Exquisite", Price = 5000000m, FuelType = "Hybrid", Seats = 5, MileageMpg = 50, SafetyRatings = 5, HorsePower = 215, UseCase = "highway", ReviewSummary = "Luxury hybrid sedan focused on comfort, refinement, and efficiency." },
+            new() { Make = "Jeep", Model = "Meridian", Varient = "Limited Plus", Price = 3800000m, FuelType = "Diesel", Seats = 7, MileageMpg = 34, SafetyRatings = 5, HorsePower = 170, UseCase = "adventure", ReviewSummary = "Premium 7-seat SUV with capable chassis and confident diesel performance." },
+            new() { Make = "MG", Model = "ZS EV", Varient = "Essence", Price = 2800000m, FuelType = "EV", Seats = 5, MileageMpg = 112, SafetyRatings = 5, HorsePower = 176, UseCase = "city", ReviewSummary = "Practical electric SUV with good range and easy city usability." },
+            new() { Make = "Hyundai", Model = "Alcazar", Varient = "Signature Diesel AT", Price = 2500000m, FuelType = "Diesel", Seats = 7, MileageMpg = 37, SafetyRatings = 4, HorsePower = 116, UseCase = "family", ReviewSummary = "Premium family SUV with useful third-row and balanced comfort." },
+            new() { Make = "Mahindra", Model = "XUV700", Varient = "AX7L Diesel AT", Price = 3200000m, FuelType = "Diesel", Seats = 7, MileageMpg = 35, SafetyRatings = 5, HorsePower = 185, UseCase = "family", ReviewSummary = "Powerful and feature-rich SUV with strong safety credentials." }
+        };
+
+        await dbContext.Cars.AddRangeAsync(cars);
+        await dbContext.SaveChangesAsync();
+    }
+}
