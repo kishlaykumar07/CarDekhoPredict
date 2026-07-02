@@ -67,10 +67,8 @@ export class WizardComponent {
   ];
 
   readonly seatsOptions: Option<number>[] = [
-    { label: '2', value: 2 },
-    { label: '4', value: 4 },
-    { label: '5', value: 5 },
-    { label: '7+', value: 7 }
+    { label: '5 seats (Hatchback / Sedan / SUV)', value: 5 },
+    { label: '7 seats (MPV / Large SUV)', value: 7 }
   ];
 
   readonly fuelOptions: Option<FuelValue>[] = [

@@ -30,7 +30,9 @@ public class RecommendationService
             {
                 var budgetScore = GetBudgetScore(car.Price, request.Budget);
                 var useCaseScore = string.Equals(car.UseCase, request.UseCase, StringComparison.OrdinalIgnoreCase) ? 100d : 0d;
-                var seatsScore = car.Seats >= request.Seats ? 100d : 0d;
+                var seatsScore = car.Seats == request.Seats ? 100d
+                    : car.Seats < request.Seats ? 0d
+                    : Math.Max(0d, 100d - ((car.Seats - request.Seats) * 25d));
                 var fuelScore = string.Equals(request.FuelType, "No preference", StringComparison.OrdinalIgnoreCase) ||
                                 string.Equals(car.FuelType, request.FuelType, StringComparison.OrdinalIgnoreCase)
                     ? 100d
