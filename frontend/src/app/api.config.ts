@@ -1,4 +1,4 @@
-const RENDER_BACKEND_URL = 'https://YOUR_RENDER_URL.onrender.com';
+const RENDER_BACKEND_URL = 'https://cardekhopredict.onrender.com';
 
 const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:5000'
